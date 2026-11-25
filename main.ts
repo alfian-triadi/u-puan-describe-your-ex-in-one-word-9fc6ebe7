@@ -9,8 +9,10 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 const WORD = "unsubscribe";
 const MAX_CHARS = 111;
 
-if (WORD.length < 1 || WORD.length > MAX_CHARS) {
-  throw new Error(`word must be 1-${MAX_CHARS} characters, got ${WORD.length}`);
+// Count code points, so multi-byte characters are counted as the scorer does.
+const charCount = [...WORD].length;
+if (charCount < 1 || charCount > MAX_CHARS) {
+  throw new Error(`word must be 1-${MAX_CHARS} characters, got ${charCount}`);
 }
 if (WORD.trim() !== WORD || /\s/.test(WORD)) {
   throw new Error("entry must be exactly one word, no whitespace");
